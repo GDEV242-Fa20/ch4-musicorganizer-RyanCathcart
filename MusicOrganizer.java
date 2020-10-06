@@ -132,9 +132,26 @@ public class MusicOrganizer
      * Play a random track in the collection, if there is one.
      */
     public void playRandomTrack() {
-        Random r = new Random();
         if(tracks.size() > 0) {
+            Random r = new Random();
             player.startPlaying(tracks.get(r.nextInt(tracks.size())).getFilename());
+        }
+    }
+    
+    /**
+     * Play all tracks in the collection in a random order exactly once, if any.
+     */
+    public void playAllShuffled() {
+        if(tracks.size() > 0) {
+            Random r = new Random();
+            ArrayList<Track> listCopy = new ArrayList<Track>(tracks);
+            while (listCopy.size() > 0) {
+                int trackNum = r.nextInt(listCopy.size());
+                Track track = listCopy.get(trackNum);
+                System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
+                player.playSample(track.getFilename());
+                listCopy.remove(trackNum);
+            }
         }
     }
     
